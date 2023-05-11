@@ -13,12 +13,7 @@ public class ArrayListImageSave {
         arrayList.add(new image(R.drawable.tradao));
         arrayList.add(new image(R.drawable.tratac));
         arrayList.add(new image(R.drawable.trachanh));
-        arrayList.add(new image(R.drawable.a));
-        arrayList.add(new image(R.drawable.b));
-        arrayList.add(new image(R.drawable.c));
-        arrayList.add(new image(R.drawable.d));
-        arrayList.add(new image(R.drawable.e));
-        arrayList.add(new image(R.drawable.f));
+
 
         return arrayList;
     }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,10 +33,25 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, HomePage.class));
+                startActivity(new Intent(MainActivity.this, MainScreen.class));
             }
         });
 
+        TextView textView = dialog.findViewById(R.id.textView11);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                showSignUp();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void showSignUp() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_signup);
         dialog.show();
     }
 }

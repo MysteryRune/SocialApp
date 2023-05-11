@@ -13,4 +13,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="Animation">
+        <item name="android:windowEnterAnimation">@anim/in_bottomsheet</item>
+        <item name="android:windowExitAnimation">@anim/out_bottomsheet</item>
+    </style>
 </resources>
