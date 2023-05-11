@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
-import com.example.socialapp.nav.FriendFragment;
+import com.example.socialapp.nav.FollowingFragment;
 import com.example.socialapp.nav.HomeFragment;
 import com.example.socialapp.nav.ProfileFragment;
 import com.example.socialapp.nav.SearchFragment;
@@ -48,8 +48,8 @@ public class MainScreen extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.nav_post) {
                         showPostImage();
                         return true;
-                } else if (item.getItemId() == R.id.nav_friend) {
-                    fragment = new FriendFragment();
+                } else if (item.getItemId() == R.id.nav_following) {
+                    fragment = new FollowingFragment();
                 } else if (item.getItemId() == R.id.nav_profile) {
                     fragment = new ProfileFragment();
                 }

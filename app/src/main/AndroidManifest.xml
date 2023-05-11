@@ -12,6 +12,9 @@
         android:theme="@style/Theme.SocialApp"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileOtherUser"
+            android:exported="false" />
+        <activity
             android:name=".ImageDetail"
             android:exported="false" />
         <activity
