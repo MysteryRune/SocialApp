@@ -13,7 +13,7 @@
         android:icon="@drawable/addition"/>
     <item android:id="@+id/nav_following"
         android:title="following"
-        android:icon="@drawable/group"/>
+        android:icon="@drawable/follow"/>
     <item android:id="@+id/nav_profile"
         android:title="profile"
         android:icon="@drawable/user"/>
