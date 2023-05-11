@@ -52,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private void showSignUp() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_signup);
+        Button btnLogin = dialog.findViewById(R.id.button);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MainScreen.class));
+            }
+        });
         dialog.show();
     }
 }
