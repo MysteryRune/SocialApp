@@ -3,30 +3,27 @@ package com.example.socialapp.nav;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
-import android.widget.Toast;
 
+import android.widget.GridView;
+import android.widget.SearchView;
+
+
+import com.example.socialapp.GridViewAdaptor;
 import com.example.socialapp.R;
-import com.example.socialapp.following.ArrayListUser;
-import com.example.socialapp.following.rcvUserAdapter;
-import com.example.socialapp.model.User;
+import com.example.socialapp.model.ArrayListImageHome;
+import com.example.socialapp.model.ArrayListImageSearch;
+import com.example.socialapp.model.image;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class SearchFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private rcvUserAdapter userAdapter;
+
 
     private SearchView searchView;
 
@@ -51,37 +48,33 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-//                filterList(s);
+                filterList(s);
                 return true;
             }
         });
 
-//        recyclerView = view.findViewById(R.id.recyclerView);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//
-//        userAdapter = new rcvUserAdapter(new ArrayListUser().setListData());
-//        recyclerView.setAdapter(userAdapter);
-//
-//        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-//        recyclerView.addItemDecoration(itemDecoration);
 
-        // Inflate the layout for this fragment
+//        GridView gridView = (GridView) view.findViewById(R.id.gridViewSearch);
+//        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImageSearch().setListData());
+//        gridView.setAdapter(gridViewAdaptor);
+
+
+
         return view;
     }
 
-//    private void filterList(String s) {
-//        List<User> filterList = new ArrayList<>();
-//        for(User user: new ArrayListUser().setListData()){
-//            if(user.getId().toLowerCase().contains(s.toLowerCase())){
-//                filterList.add(user);
-//            }
-//        }
-//
-//        if(filterList.isEmpty()){
-//            Toast.makeText(getContext(), "Không tìm thấy user", Toast.LENGTH_SHORT).show();
-//        }else {
-//            userAdapter.updateList(filterList);
-//        }
-//    }
+    private void filterList(String s) {
+        ArrayList<image> filteredList = new ArrayList<>();
+
+        for (image item : new ArrayListImageSearch().setListData()) {
+            if (item.getChude().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        GridView gridView = (GridView) getView().findViewById(R.id.gridViewSearch);
+        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), filteredList);
+        gridView.setAdapter(gridViewAdaptor);
+
+    }
 }

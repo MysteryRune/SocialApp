@@ -7,17 +7,17 @@ import java.util.ArrayList;
 public class ArrayListImagePost {
     public ArrayList<image> setListData() {
         ArrayList<image> arrayList = new ArrayList<>();
-        arrayList.add(new image(R.drawable.trachanh));
-        arrayList.add(new image(R.drawable.tradao));
-        arrayList.add(new image(R.drawable.tradau));
-        arrayList.add(new image(R.drawable.trasua));
-        arrayList.add(new image(R.drawable.tratac));
-        arrayList.add(new image(R.drawable.a));
-        arrayList.add(new image(R.drawable.b));
-        arrayList.add(new image(R.drawable.c));
-        arrayList.add(new image(R.drawable.d));
-        arrayList.add(new image(R.drawable.e));
-        arrayList.add(new image(R.drawable.f));
+        arrayList.add(new image(R.drawable.trachanh, "first"));
+        arrayList.add(new image(R.drawable.tradao, "first"));
+        arrayList.add(new image(R.drawable.tradau, "first"));
+        arrayList.add(new image(R.drawable.trasua, "first"));
+        arrayList.add(new image(R.drawable.tratac, "first"));
+        arrayList.add(new image(R.drawable.a, "first"));
+        arrayList.add(new image(R.drawable.b, "first"));
+        arrayList.add(new image(R.drawable.c, "first"));
+        arrayList.add(new image(R.drawable.d, "first"));
+        arrayList.add(new image(R.drawable.e, "first"));
+        arrayList.add(new image(R.drawable.f, "first"));
 
         return arrayList;
     }

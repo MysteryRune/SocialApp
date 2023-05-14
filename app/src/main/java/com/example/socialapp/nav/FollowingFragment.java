@@ -77,10 +77,7 @@ public class FollowingFragment extends Fragment {
             }
         }
 
-        if(filterList.isEmpty()){
-            Toast.makeText(getContext(), "Không tìm thấy user", Toast.LENGTH_SHORT).show();
-        }else {
             userAdapter.updateList(filterList);
-        }
+
     }
 }

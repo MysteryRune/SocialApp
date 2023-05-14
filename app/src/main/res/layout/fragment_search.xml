@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".nav.SearchFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <SearchView
             android:id="@+id/searchView"
@@ -24,14 +25,15 @@
 
         </SearchView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <GridView
+            android:id="@+id/gridViewSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
-            android:layout_marginTop="20dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:horizontalSpacing="6dp"
+            android:numColumns="2"
+            android:verticalSpacing="6dp"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
 
 </FrameLayout>
