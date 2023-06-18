@@ -16,9 +16,8 @@ import android.widget.SearchView;
 
 
 import com.example.socialapp.GridViewAdaptor;
-import com.example.socialapp.ImageDetail;
+import com.example.socialapp.image_detail.ImageDetail;
 import com.example.socialapp.R;
-import com.example.socialapp.model.ArrayListImageHome;
 import com.example.socialapp.model.ArrayListImageSearch;
 import com.example.socialapp.model.image;
 

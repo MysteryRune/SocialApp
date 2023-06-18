@@ -12,12 +12,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.socialapp.GridViewAdaptor;
-import com.example.socialapp.ImageDetail;
+import com.example.socialapp.image_detail.ImageDetail;
 import com.example.socialapp.R;
 import com.example.socialapp.model.ArrayListImageHome;
-import com.example.socialapp.model.ArrayListImagePost;
-import com.example.socialapp.model.ArrayListImageSave;
 import com.example.socialapp.model.image;
+
+import java.util.ArrayList;
 
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
@@ -26,7 +26,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,9 +48,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         image image = (image) adapterView.getItemAtPosition(i);
 
+        ArrayList<image> images = new ArrayListImageHome().setListData();
+
         Intent intent = new Intent(getContext(), ImageDetail.class);
 
-        intent.putExtra("imageId", image.getImageId());
+        intent.putExtra("images", images);
+
+        intent.putExtra("current", i);
+
 
         startActivity(intent);
     }

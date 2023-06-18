@@ -1,6 +1,8 @@
 package com.example.socialapp.model;
 
-public class image {
+import java.io.Serializable;
+
+public class image implements Serializable {
     private final Integer imageId;
     private final String chude;
 

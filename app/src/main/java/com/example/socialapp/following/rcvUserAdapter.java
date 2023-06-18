@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.socialapp.ImageDetail;
 import com.example.socialapp.ProfileOtherUser;
 import com.example.socialapp.R;
 import com.example.socialapp.model.User;
