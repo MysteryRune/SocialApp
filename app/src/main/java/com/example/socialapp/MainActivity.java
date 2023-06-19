@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,29 +46,69 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void navigateToHomePage() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        startActivity(new Intent(MainActivity.this, MainScreen.class));
+        finish();
+    }
+
     private void showLoginDialog(String phoneNumber, String password) {
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_login);
         Button btnLogin = dialog.findViewById(R.id.button_login);
+        TextView textView = dialog.findViewById(R.id.signUpNow);
+
         ((EditText) dialog.findViewById(R.id.userPhoneNumber)).setText(phoneNumber);
         ((EditText) dialog.findViewById(R.id.password)).setText(password);
-
         dialog.show();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                startActivity(new Intent(MainActivity.this, MainScreen.class));
+                String phoneNumber = ((EditText) dialog.findViewById(R.id.userPhoneNumber)).getText().toString();
+                String password = ((EditText) dialog.findViewById(R.id.password)).getText().toString();
+                loginUser(phoneNumber, password);
             }
         });
-
-        TextView textView = dialog.findViewById(R.id.signUpNow);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
                 showSignUpDialog();
+            }
+        });
+    }
+
+    private void loginUser(String phoneNumber, String password) {
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document("user_" + phoneNumber);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String passwordDb = document.getString("Password");
+                        if (Objects.equals(password, passwordDb)) {
+                            Toast.makeText(MainActivity.this,
+                                            "Đăng nhập thành công",
+                                            Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                            navigateToHomePage();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this,
+                                            "Sai mật mật khẩu, vui lòng thử lại!",
+                                            Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Người dùng không tồn tại", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
