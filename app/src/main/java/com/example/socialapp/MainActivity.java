@@ -41,18 +41,24 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLoginDialog("", "");
+                showLoginDialog("0931222466", "123456");
             }
         });
     }
 
-    public void navigateToHomePage() {
+    public void navigateToHomePage(String phoneNumber) {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        startActivity(new Intent(MainActivity.this, MainScreen.class));
+
+        // Init before Start Main Screen
+        Intent intent = new Intent(MainActivity.this, MainScreen.class);
+        Bundle b = new Bundle();
+        b.putString("Phone number", phoneNumber);
+        intent.putExtras(b);
+        startActivity(intent);
         finish();
     }
 
@@ -97,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                                             "Đăng nhập thành công",
                                             Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
-                            navigateToHomePage();
+                            navigateToHomePage(phoneNumber);
                         }
                         else {
                             Toast.makeText(MainActivity.this,
@@ -189,6 +195,11 @@ public class MainActivity extends AppCompatActivity {
                         user.put("Password", password);
                         user.put("Name", name);
                         user.put("Citizen identification", id);
+                        user.put("Profile avatar", "default");
+                        user.put("Nickname", "");
+                        user.put("Following", 0);
+                        user.put("Follower", 0);
+                        user.put("Like", 0);
 
                         db.collection("Users")
                                 .document("user_" + phoneNumber)
