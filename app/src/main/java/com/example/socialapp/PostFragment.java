@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.socialapp.image_detail.ImageDetail;
 import com.example.socialapp.model.ArrayListImagePost;
 import com.example.socialapp.model.image;
 
@@ -44,6 +44,7 @@ public class PostFragment extends Fragment implements AdapterView.OnItemClickLis
         Intent intent = new Intent(getContext(), ImageDetail.class);
 
         intent.putExtra("imageId", image.getImageId());
+
 
         startActivity(intent);
     }

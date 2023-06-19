@@ -15,7 +15,7 @@
             android:name=".ProfileOtherUser"
             android:exported="false" />
         <activity
-            android:name=".ImageDetail"
+            android:name=".image_detail.ImageDetail"
             android:exported="false" />
         <activity
             android:name=".MainScreen"
