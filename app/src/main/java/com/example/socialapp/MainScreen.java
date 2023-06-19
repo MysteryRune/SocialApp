@@ -23,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainScreen extends AppCompatActivity {
 
+    String phoneNumber;
     BottomNavigationView navigationView;
 
     @Override
@@ -31,6 +32,8 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.main_screen);
         getSupportActionBar().hide();
 
+        Bundle b = getIntent().getExtras();
+        phoneNumber = b.getString("Phone number");
         navigationView = findViewById(R.id.nav_bottom);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mainscreen, new HomeFragment()).commit();
@@ -52,6 +55,9 @@ public class MainScreen extends AppCompatActivity {
                     fragment = new FollowingFragment();
                 } else if (item.getItemId() == R.id.nav_profile) {
                     fragment = new ProfileFragment();
+                    Bundle b = new Bundle();
+                    b.putString("Phone number", phoneNumber);
+                    fragment.setArguments(b);
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainscreen, fragment).commit();
