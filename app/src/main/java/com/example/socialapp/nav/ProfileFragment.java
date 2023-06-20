@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         name = document.getString("Name");
-                        nickName = document.getString("Nickname");
+                        nickName = document.getString("Citizen identification");
                         following = String.valueOf(document.get("Following"));
                         follower = String.valueOf(document.get("Follower"));
                         like = String.valueOf(document.get("Like"));

@@ -8,8 +8,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.example.socialapp.MainActivity;
 import com.example.socialapp.ProfileOtherUser;
 import com.example.socialapp.R;
 import com.example.socialapp.model.image;
@@ -60,6 +65,23 @@ public class ImageDetail_Fragment extends Fragment {
         });
         ImageView imageView = v.findViewById(R.id.imageView7);
         imageView.setImageResource(image.getImageId());
+
+        ToggleButton toggleButton = v.findViewById(R.id.toggle);
+
+        TextView numberLike = v.findViewById(R.id.numberLike);
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {
+                    numberLike.setText("1");
+                } else {
+                    numberLike.setText("0");
+                }
+            }
+        });
+
         return v;
     }
+
 }
