@@ -18,15 +18,16 @@ import android.widget.SearchView;
 import com.example.socialapp.GridViewAdaptor;
 import com.example.socialapp.image_detail.ImageDetail;
 import com.example.socialapp.R;
+import com.example.socialapp.model.ArrayListImageHome;
 import com.example.socialapp.model.ArrayListImageSearch;
 import com.example.socialapp.model.image;
 
 import java.util.ArrayList;
 
-public class SearchFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class SearchFragment extends Fragment {
 
 
-
+    private ArrayList<image> mImageData;
     private SearchView searchView;
 
     public SearchFragment() {
@@ -57,10 +58,15 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
 
         GridView gridView = (GridView) view.findViewById(R.id.gridViewSearch);
-//        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImageSearch().setListData());
-//        gridView.setAdapter(gridViewAdaptor);
-        gridView.setOnItemClickListener(this);
+        new ArrayListImageSearch().setListData(new ArrayListImageSearch.ImageDataCallback() {
+            @Override
+            public void onDataLoaded(ArrayList<image> imageData) {
+                mImageData = imageData;
+//                GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(requireActivity(), imageData);
+//                gridView.setAdapter(gridViewAdaptor);
 
+            }
+        });
 
 
         return view;
@@ -69,7 +75,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
     private void filterList(String s) {
         ArrayList<image> filteredList = new ArrayList<>();
 
-        for (image item : new ArrayListImageSearch().setListData()) {
+        for (image item : mImageData) {
             if (item.getTopic().toLowerCase().contains(s.toLowerCase())) {
                 filteredList.add(item);
             }
@@ -79,18 +85,18 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), filteredList);
         gridView.setAdapter(gridViewAdaptor);
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getContext(), ImageDetail.class);
 
+                intent.putExtra("images", filteredList);
+
+                intent.putExtra("current", i);
+
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        image image = (image) adapterView.getItemAtPosition(i);
-
-        Intent intent = new Intent(getContext(), ImageDetail.class);
-
-        intent.putExtra("ID Image storage", image.getIdImageStorage());
-
-        startActivity(intent);
-
-    }
 }

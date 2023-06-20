@@ -36,8 +36,6 @@ public class ImageDetail extends AppCompatActivity {
 
         viewPager2 = findViewById(R.id.viewpager2);
 
-
-
         Intent intent = getIntent();
         ArrayList<image> images =(ArrayList<image>)  getIntent().getSerializableExtra("images");
         int currentPosition = intent.getIntExtra("current", 0);
@@ -46,9 +44,6 @@ public class ImageDetail extends AppCompatActivity {
         viewPager2.setAdapter(imagePagerAdapter);
         viewPager2.setCurrentItem(currentPosition, false);
 
-
-
     }
-
 
 }

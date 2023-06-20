@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-
+    private ArrayList<image> mImageData;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -35,29 +35,32 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridViewHome);
 
-        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(requireActivity(), new ArrayListImageHome().setListData());
-        gridView.setAdapter(gridViewAdaptor);
-        gridView.setOnItemClickListener(this);
+        new ArrayListImageHome().setListData(new ArrayListImageHome.ImageDataCallback() {
+            @Override
+            public void onDataLoaded(ArrayList<image> imageData) {
+                mImageData = imageData;
+                GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(requireActivity(), imageData);
+                gridView.setAdapter(gridViewAdaptor);
+                gridView.setOnItemClickListener(HomeFragment.this);
+            }
+        });
+
         // Inflate the layout for this fragment
      return rootView;
 
-
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        image image = (image) adapterView.getItemAtPosition(i);
 
-        ArrayList<image> images = new ArrayListImageHome().setListData();
+
 
         Intent intent = new Intent(getContext(), ImageDetail.class);
 
-        intent.putExtra("images", images);
+        intent.putExtra("images", mImageData);
 
         intent.putExtra("current", i);
-
-
         startActivity(intent);
+
     }
 }

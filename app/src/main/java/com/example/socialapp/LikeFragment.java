@@ -1,5 +1,6 @@
 package com.example.socialapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,15 +8,23 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.socialapp.image_detail.ImageDetail;
+import com.example.socialapp.model.ArrayListImageHome;
 import com.example.socialapp.model.ArrayListImageLike;
 import com.example.socialapp.model.ArrayListImagePost;
+import com.example.socialapp.model.image;
+import com.example.socialapp.nav.HomeFragment;
+
+import java.util.ArrayList;
 
 
-public class LikeFragment extends Fragment {
+public class LikeFragment extends Fragment implements AdapterView.OnItemClickListener{
 
     String phoneNumber;
+    private ArrayList<image> mImageData;
 
     public LikeFragment() {
         // Required empty public constructor
@@ -32,9 +41,27 @@ public class LikeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_like, container, false);
+
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview3);
-        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImageLike().setListData(phoneNumber));
-        gridView.setAdapter(gridViewAdaptor);
+        new ArrayListImageHome().setListData(new ArrayListImageHome.ImageDataCallback() {
+            @Override
+            public void onDataLoaded(ArrayList<image> imageData) {
+                mImageData = imageData;
+                GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(requireActivity(), imageData);
+                gridView.setAdapter(gridViewAdaptor);
+                gridView.setOnItemClickListener(LikeFragment.this);
+            }
+        });
         return rootView;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(getContext(), ImageDetail.class);
+
+        intent.putExtra("images", mImageData);
+
+        intent.putExtra("current", i);
+        startActivity(intent);
     }
 }

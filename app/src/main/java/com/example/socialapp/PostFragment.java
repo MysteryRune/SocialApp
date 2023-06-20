@@ -12,13 +12,18 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.socialapp.image_detail.ImageDetail;
+import com.example.socialapp.model.ArrayListImageHome;
 import com.example.socialapp.model.ArrayListImagePost;
 import com.example.socialapp.model.image;
+import com.example.socialapp.nav.HomeFragment;
+
+import java.util.ArrayList;
 
 
 public class PostFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     String phoneNumber;
+    private ArrayList<image> mImageData;
 
     public PostFragment() {
         // Required empty public constructor
@@ -36,21 +41,25 @@ public class PostFragment extends Fragment implements AdapterView.OnItemClickLis
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_post, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
-        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImagePost().setListData(phoneNumber));
-        gridView.setAdapter(gridViewAdaptor);
-        gridView.setOnItemClickListener(this);
+        new ArrayListImageHome().setListData(new ArrayListImageHome.ImageDataCallback() {
+            @Override
+            public void onDataLoaded(ArrayList<image> imageData) {
+                mImageData = imageData;
+                GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(requireActivity(), imageData);
+                gridView.setAdapter(gridViewAdaptor);
+                gridView.setOnItemClickListener(PostFragment.this);
+            }
+        });
         return rootView;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        image image = (image) adapterView.getItemAtPosition(i);
-
         Intent intent = new Intent(getContext(), ImageDetail.class);
 
-        intent.putExtra("ID Image storage", image.getIdImageStorage());
+        intent.putExtra("images", mImageData);
 
-
+        intent.putExtra("current", i);
         startActivity(intent);
     }
 }
