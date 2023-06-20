@@ -18,7 +18,7 @@ import com.example.socialapp.model.image;
 
 public class PostFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-
+    String phoneNumber;
 
     public PostFragment() {
         // Required empty public constructor
@@ -28,10 +28,15 @@ public class PostFragment extends Fragment implements AdapterView.OnItemClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Get Args
+        Bundle b = this.getArguments();
+        assert b != null;
+        phoneNumber = b.getString("Phone number");
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_post, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
-        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImagePost().setListData());
+        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImagePost().setListData(phoneNumber));
         gridView.setAdapter(gridViewAdaptor);
         gridView.setOnItemClickListener(this);
         return rootView;
@@ -43,7 +48,7 @@ public class PostFragment extends Fragment implements AdapterView.OnItemClickLis
 
         Intent intent = new Intent(getContext(), ImageDetail.class);
 
-        intent.putExtra("imageId", image.getImageId());
+        intent.putExtra("ID Image storage", image.getIdImageStorage());
 
 
         startActivity(intent);

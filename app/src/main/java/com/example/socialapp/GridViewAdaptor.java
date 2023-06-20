@@ -1,7 +1,10 @@
 package com.example.socialapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.socialapp.model.image;
 
 import java.util.ArrayList;
@@ -35,7 +39,9 @@ public class GridViewAdaptor extends ArrayAdapter<image> {
         }
 
         image image = getItem(position);
-        holderView.imageView.setImageResource(image.getImageId());
+        holderView.imageView.setImageDrawable(image.getDrawble());
+        Glide.with(getContext()).load(image.getURL()).into(holderView.imageView);
+        Log.d(TAG, image.getIdImageStorage());
 
         return convertView;
     }
@@ -44,7 +50,7 @@ public class GridViewAdaptor extends ArrayAdapter<image> {
         private final ImageView imageView;
 
         public HolderView(View view) {
-            imageView = view.findViewById(R.id.imageGrid);
+            imageView = (ImageView) view.findViewById(R.id.imageGrid);
         }
     }
 }

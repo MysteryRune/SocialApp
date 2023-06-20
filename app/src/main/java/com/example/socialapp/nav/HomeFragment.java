@@ -18,6 +18,7 @@ import com.example.socialapp.model.ArrayListImageHome;
 import com.example.socialapp.model.image;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener{
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridViewHome);
 
-        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImageHome().setListData());
+        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(requireActivity(), new ArrayListImageHome().setListData());
         gridView.setAdapter(gridViewAdaptor);
         gridView.setOnItemClickListener(this);
         // Inflate the layout for this fragment

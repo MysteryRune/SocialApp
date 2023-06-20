@@ -119,11 +119,29 @@ public class ProfileFragment extends Fragment {
         @Override
         public Fragment createFragment(int position) {
             if(position == 0){
-                return new PostFragment();
+                Fragment fragment = new PostFragment();
+                Bundle b = new Bundle();
+
+                b.putString("Phone number", phoneNumber);
+                fragment.setArguments(b);
+
+                return fragment;
             } else if (position==1) {
-                return new SaveFragment();
+                Fragment fragment = new SaveFragment();
+                Bundle b = new Bundle();
+
+                b.putString("Phone number", phoneNumber);
+                fragment.setArguments(b);
+
+                return fragment;
             } else {
-                return new LikeFragment();
+                Fragment fragment = new LikeFragment();
+                Bundle b = new Bundle();
+
+                b.putString("Phone number", phoneNumber);
+                fragment.setArguments(b);
+
+                return fragment;
             }
         }
 
