@@ -19,9 +19,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -158,8 +161,13 @@ public class MainActivity extends AppCompatActivity {
                                     "Độ dài mật khẩu tối thiểu là 6 kí tự",
                                     Toast.LENGTH_SHORT).show();
                     
-                }
-                else {
+                } else if (txt_id.length() < 6) {
+
+                    Toast.makeText(MainActivity.this,
+                            "Độ dài ID tối thiểu là 6 kí tự",
+                            Toast.LENGTH_SHORT).show();
+
+                } else {
 
                     registerUser(txt_phoneNumber, txt_password, txt_name, txt_id);
 
@@ -170,7 +178,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void registerUser(String phoneNumber, String password, String name, String id) {
 
-        DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document("user_" + phoneNumber);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference colRef = db.collection("Users");
+        DocumentReference docRef = colRef.document("user_" + phoneNumber);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -180,49 +190,68 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.d(TAG, "Document exists!");
                         Toast.makeText(MainActivity.this,
-                                "Người dùng đã tồn tại!\nVui lòng dùng số điện thoại khác!",
-                                Toast.LENGTH_SHORT).show();
+                                "Số điện thoại đã được dùng đăng ký tài khoản",
+                                Toast.LENGTH_LONG).show();
 
                     }
                     else {
 
-                        Log.d(TAG, "Document does not exist!");
-                        // Declare Variable:
-                        //  - db: Database --> Used to access Database
-                        //  - user: Create Hash Map to storage Information user and add them to Database
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        HashMap<String, Object> user = new HashMap<>();
-
-                        // Initialize User's Information
-                        user.put("Phone number", phoneNumber);
-                        user.put("Password", password);
-                        user.put("Name", name);
-                        user.put("Citizen identification", id);
-                        user.put("Profile avatar", "default");
-                        user.put("Nickname", "");
-                        user.put("Following", 0);
-                        user.put("Follower", 0);
-                        user.put("Like", 0);
-
-                        db.collection("Users")
-                                .document("user_" + phoneNumber)
-                                .set(user)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        colRef.whereEqualTo("ID", id)
+                                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
+                                            QuerySnapshot doc = task.getResult();
+                                            if (!doc.isEmpty()) {
+                                                Toast.makeText(MainActivity.this,
+                                                        "ID người dùng đã tồn tại\nVui lòng dùng ID khác",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                            else {
+                                                Log.d(TAG, "Document does not exist!");
+                                                // Declare Variable:
+                                                //  - db: Database --> Used to access Database
+                                                //  - user: Create Hash Map to storage Information user and add them to Database
+                                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                                HashMap<String, Object> user = new HashMap<>();
 
+                                                // Initialize User's Information
+                                                user.put("Phone number", phoneNumber);
+                                                user.put("Password", password);
+                                                user.put("Name", name);
+                                                user.put("ID", id);
+                                                user.put("Profile avatar", "default");
+                                                user.put("Following", 0);
+                                                user.put("Follower", 0);
+                                                user.put("Like", 0);
+
+                                                db.collection("Users")
+                                                        .document("user_" + phoneNumber)
+                                                        .set(user)
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+
+                                                                    Toast.makeText(MainActivity.this,
+                                                                            "Chúc mừng bạn đã tạo tài khoản thành công",
+                                                                            Toast.LENGTH_SHORT).show();
+
+                                                                }
+                                                            }
+                                                        });
+
+                                                dialog.dismiss();
+                                                showLoginDialog(phoneNumber, password);
+                                            }
+                                        }
+                                        else {
                                             Toast.makeText(MainActivity.this,
-                                                    "Chúc mừng bạn đã tạo tài khoản thành công",
-                                                    Toast.LENGTH_SHORT).show();
-
+                                                            "Đã xảy ra lỗi, vui lòng thử lại",
+                                                            Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-
-                        dialog.dismiss();
-                        showLoginDialog(phoneNumber, password);
-
                     }
                 }
                 else {
