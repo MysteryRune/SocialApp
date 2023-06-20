@@ -70,7 +70,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
         ArrayList<image> filteredList = new ArrayList<>();
 
         for (image item : new ArrayListImageSearch().setListData()) {
-            if (item.getChude().toLowerCase().contains(s.toLowerCase())) {
+            if (item.getTopic().toLowerCase().contains(s.toLowerCase())) {
                 filteredList.add(item);
             }
         }
@@ -88,7 +88,7 @@ public class SearchFragment extends Fragment implements AdapterView.OnItemClickL
 
         Intent intent = new Intent(getContext(), ImageDetail.class);
 
-        intent.putExtra("imageId", image.getImageId());
+        intent.putExtra("ID Image storage", image.getIdImageStorage());
 
         startActivity(intent);
 

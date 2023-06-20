@@ -1,21 +1,37 @@
 package com.example.socialapp.model;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
 
 public class image implements Serializable {
-    private final Integer imageId;
-    private final String chude;
+    private final Drawable drawable;
+    private final String topic;
+    private final String idImageStorage;
+    private final String URL;
 
-    public image(Integer imageId, String chude) {
-        this.imageId = imageId;
-        this.chude = chude;
+    public image(Drawable imageId, String idImageStorage, String topic, String url) {
+        this.drawable = imageId;
+        this.idImageStorage = idImageStorage;
+        this.topic = topic;
+        this.URL = url;
     }
 
-    public Integer getImageId() {
-        return imageId;
+    public Drawable getDrawble() {
+        return drawable;
     }
 
-    public String getChude() {
-        return chude;
+    public String getIdImageStorage() {
+        return idImageStorage;
     }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
 }

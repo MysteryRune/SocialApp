@@ -64,7 +64,7 @@ public class ImageDetail_Fragment extends Fragment {
             }
         });
         ImageView imageView = v.findViewById(R.id.imageView7);
-        imageView.setImageResource(image.getImageId());
+        imageView.setImageDrawable(image.getDrawble());
 
         ToggleButton toggleButton = v.findViewById(R.id.toggle);
 

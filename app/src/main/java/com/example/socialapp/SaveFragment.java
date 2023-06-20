@@ -14,6 +14,7 @@ import com.example.socialapp.model.ArrayListImageSave;
 
 public class SaveFragment extends Fragment {
 
+    String phoneNumber;
 
     public SaveFragment() {
         // Required empty public constructor
@@ -23,10 +24,15 @@ public class SaveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Get Args
+        Bundle b = this.getArguments();
+        assert b != null;
+        phoneNumber = b.getString("Phone number");
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_save, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview2);
-        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImageSave().setListData());
+        GridViewAdaptor gridViewAdaptor = new GridViewAdaptor(getActivity(), new ArrayListImageSave().setListData(phoneNumber));
         gridView.setAdapter(gridViewAdaptor);
         return rootView;
     }
