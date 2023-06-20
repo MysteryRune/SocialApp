@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLoginDialog("0123456789", "123456");
+                showLoginDialog("", "");
             }
         });
     }

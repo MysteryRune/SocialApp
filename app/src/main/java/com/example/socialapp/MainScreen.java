@@ -43,6 +43,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -172,9 +175,8 @@ public class MainScreen extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         String idImageStorage = date_str + "_user_" + phoneNumber + "_1";
-                                        String topic = ((EditText) dialog.findViewById(R.id.topic)).getText().toString();
 
-                                        writeInfoImageOnImageStorageCollection(idImageStorage, topic, "https://...");
+                                        uploadImage2ImageStorageFolderFirebaseStorage(selectedImage, idImageStorage);
 
                                         Log.d(TAG, "Đã cập nhật bài post");
                                         Toast.makeText(MainScreen.this,
@@ -211,9 +213,8 @@ public class MainScreen extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     String idImageStorage = date_str + "_user_" + phoneNumber + "_" + nextID;
-                                                    String topic = ((EditText) dialog.findViewById(R.id.topic)).getText().toString();
 
-                                                    writeInfoImageOnImageStorageCollection(idImageStorage, topic, "https://...");
+                                                    uploadImage2ImageStorageFolderFirebaseStorage(selectedImage, idImageStorage);
 
                                                     Log.d(TAG, "Đã cập nhật bài post");
                                                     Toast.makeText(MainScreen.this,
@@ -238,6 +239,32 @@ public class MainScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void uploadImage2ImageStorageFolderFirebaseStorage(Uri image, String idImageStorage) {
+        StorageReference stoRef = FirebaseStorage.getInstance().getReference("Image storage/" + idImageStorage);
+
+        stoRef.putFile(image)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d(TAG, "Image upload successful");
+                        stoRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String topic = ((EditText) dialog.findViewById(R.id.topic)).getText().toString();
+                                writeInfoImageOnImageStorageCollection(idImageStorage, topic, String.valueOf(uri));
+                                Log.d(TAG, "Download URL: " + uri);
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Image upload failed");
+                    }
+                });
     }
 
     public void writeInfoImageOnImageStorageCollection(String idImageStorage, String topic, String url) {
