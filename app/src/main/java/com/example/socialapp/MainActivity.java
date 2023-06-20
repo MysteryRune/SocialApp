@@ -41,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLoginDialog("0931222466", "123456");
+                showLoginDialog("0123456789", "123456");
             }
         });
     }
 
     public void navigateToHomePage(String phoneNumber) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -143,20 +143,23 @@ public class MainActivity extends AppCompatActivity {
                                     "Vui lòng điền hết các trường dữ liệu",
                                     Toast.LENGTH_SHORT).show();
 
-                } else if (txt_phoneNumber.length() < 10 ||
+                }
+                else if (txt_phoneNumber.length() < 10 ||
                         !txt_phoneNumber.matches("[0-9]+")) {
 
                     Toast.makeText(MainActivity.this,
                             "Số điện thoại bạn nhập không hợp lệ",
                             Toast.LENGTH_SHORT).show();
 
-                } else if (txt_password.length() < 6) {
+                }
+                else if (txt_password.length() < 6) {
 
                     Toast.makeText(MainActivity.this,
                                     "Độ dài mật khẩu tối thiểu là 6 kí tự",
                                     Toast.LENGTH_SHORT).show();
                     
-                } else {
+                }
+                else {
 
                     registerUser(txt_phoneNumber, txt_password, txt_name, txt_id);
 
