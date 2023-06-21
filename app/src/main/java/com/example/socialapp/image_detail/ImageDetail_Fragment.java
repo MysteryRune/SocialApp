@@ -116,7 +116,7 @@ public class ImageDetail_Fragment extends Fragment {
 
                 } else {
                     Map<String, Object> updates = new HashMap<>();
-                    int number = Integer.parseInt(image.getLike()) - 1;
+                    int number = Integer.parseInt(image.getLike());
                     updates.put("Like", number);
 
                     docRef.update(updates)
